@@ -1,0 +1,36 @@
+{
+  "name": "heg-alpha-ble",
+  "version": "0.1.7",
+  "description": "HEG-alpha bluetooth connection class",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "publish-script": "del dist /s /f /q && npm run lint && npm run build && npm publish",
+    "build": "tsc",
+    "lint": "tslint 'src/**/*.{ts,tsx}'"
+  },
+  "files": [
+    "/dist",
+    "/src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giveback007/heg-alpha-ble.git"
+  },
+  "author": "Dovydas Stirpeika <dovy91@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Giveback007/heg-alpha-ble/issues"
+  },
+  "homepage": "https://github.com/Giveback007/heg-alpha-ble#readme",
+  "dependencies": {
+    "@giveback007/util-lib": "~0.19.2",
+    "lit-html": "~1.3.0",
+    "tslib": "~2.0.3"
+  },
+  "devDependencies": {
+    "@types/web-bluetooth": "^0.0.9",
+    "tslint": "^6.1.3",
+    "typescript": "^4.1.2"
+  }
+}
