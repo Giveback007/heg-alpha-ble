@@ -24,6 +24,7 @@ export class HegEventHandler {
     async start() {
         this.char.startNotifications();
         this.char.addEventListener('characteristicvaluechanged', this.handleValue);
+        this.stateUpdater({ sessionStart: Date.now() });
     }
 
     async end () {
@@ -77,7 +78,7 @@ export class HegEventHandler {
         val.sma5m = timeSma(this.data, min(5));
         val.sma10m = timeSma(this.data, min(10));
 
-        this.stateUpdater({ data: [...this.data], lastVal: val });
+        this.stateUpdater({ sessionData: [...this.data], lastVal: val });
         this.SPS++;
 
         return;

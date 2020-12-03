@@ -11,13 +11,21 @@ export type HegData = {
     sma3: number;
 }
 
+export type HegSession = {
+    start: number,
+    end: number,
+    data: HegData[],
+    id: string
+}
+;
 export type HegState = {
-    data: HegData[];
+    pastSessions: HegSession[];
+    sessionData: HegData[];
     isReading: boolean;
     isConnected: boolean;
     lastVal: HegData;
     showBtStats: boolean;
-    timeConnected: number;
+    sessionStart: number;
     SPS: number;
     ufSPS: number;
     spsErrors: number;

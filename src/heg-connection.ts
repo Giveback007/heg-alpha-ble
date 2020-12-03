@@ -3,6 +3,7 @@ import { HegEventHandler } from './heg-event-handler';
 import { render } from 'lit-html';
 import { btStatsCSS, btStatsModal } from './bt-stats-modal';
 import type { HegData, HegState } from './@types';
+import { uiid } from '@giveback007/util-lib';
 
 const encoder = new TextEncoder();
 
@@ -20,17 +21,19 @@ export class HegConnection extends StateManager<HegState> {
 
     constructor() {
         super({
-            data: [ ],
+            pastSessions: [],
+            sessionData: [], // current session data
+            sessionStart: 0, // current session start time
             isReading: false,
             isConnected: false,
             lastVal: { } as HegData,
             showBtStats: false,
             SPS: 0,
             ufSPS: 0,
-            timeConnected: 0,
             spsErrors: 0,
         }, {
-            id: 'HegConnection', useKeys: ['showBtStats']
+            id: 'HegConnection',
+            useKeys: ['showBtStats', 'pastSessions']
         });
 
         const styleSheet: HTMLStyleElement = document.createElement('style');
@@ -39,6 +42,7 @@ export class HegConnection extends StateManager<HegState> {
 
         const btStatsRoot = document.createElement('div');
         document.body.appendChild(btStatsRoot);
+        (window as any).hegToggleBtStats = this.toggleBtStats;
 
         this.subToKeys(
             ['isConnected', 'showBtStats', 'SPS', 'ufSPS', 'spsErrors'],
@@ -70,7 +74,7 @@ export class HegConnection extends StateManager<HegState> {
             this.characteristic, this.setState
         )
 
-        this.setState({ isConnected: true, timeConnected: Date.now() });
+        this.setState({ isConnected: true });
         return true;
     }
 
@@ -92,9 +96,21 @@ export class HegConnection extends StateManager<HegState> {
     }
 
     async stopReadingHEG() {
+        const { sessionStart, sessionData, pastSessions } = this.getState();
         this.hegValueChangeHandler?.end();
         await this.sendCommand('f');
         this.setState({ isReading: false });
+
+        if (sessionData.length) this.setState({
+            pastSessions: [...pastSessions, {
+                start: sessionStart,
+                end: Date.now(),
+                data: sessionData,
+                id: uiid(),
+            }],
+            sessionStart: 0,
+            sessionData: []
+        })
     }
 
     /** send a command by string:
