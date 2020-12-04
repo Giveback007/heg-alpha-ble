@@ -19,17 +19,30 @@ export type HegSession = {
 }
 ;
 export type HegState = {
+    showBtStats: boolean;
+    SPS: number;
+    ufSPS: number;
+    spsErrors: number;
+} & HegStateI;
+
+export type HegSimState = {} & HegStateI;
+
+/** [red, ir, ratio] */
+export type HegTuple = [number, number, number];
+
+export interface HegConnectionI {
+    connect(): Promise<boolean>;
+    disconnect(): Promise<void>;
+    startReadingHEG(): Promise<void>;
+    stopReadingHEG(): Promise<void>;
+}
+
+export interface HegStateI {
     pastSessions: HegSession[];
     sessionData: HegData[];
     isReading: boolean;
     isConnected: boolean;
     lastVal: HegData;
-    showBtStats: boolean;
     sessionStart: number;
-    SPS: number;
-    ufSPS: number;
-    spsErrors: number;
 }
 
-/** [red, ir, ratio] */
-export type HegTuple = [number, number, number];
