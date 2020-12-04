@@ -19,13 +19,18 @@ export type HegSession = {
 }
 ;
 export type HegState = {
+    pastSessions: HegSession[];
+    sessionData: HegData[];
+    isReading: boolean;
+    isConnected: boolean;
+    lastVal: HegData;
+    sessionStart: number;
     showBtStats: boolean;
     SPS: number;
     ufSPS: number;
     spsErrors: number;
-} & HegStateI;
-
-export type HegSimState = {} & HegStateI;
+    simMode: boolean
+}
 
 /** [red, ir, ratio] */
 export type HegTuple = [number, number, number];
@@ -36,13 +41,3 @@ export interface HegConnectionI {
     startReadingHEG(): Promise<void>;
     stopReadingHEG(): Promise<void>;
 }
-
-export interface HegStateI {
-    pastSessions: HegSession[];
-    sessionData: HegData[];
-    isReading: boolean;
-    isConnected: boolean;
-    lastVal: HegData;
-    sessionStart: number;
-}
-
