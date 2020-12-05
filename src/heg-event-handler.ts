@@ -1,5 +1,5 @@
+import type { StateManager } from '@giveback007/browser-utils';
 import { min, sec } from '@giveback007/util-lib';
-import type { StateManager } from '@giveback007/util-lib/dist/browser';
 import type { HegData, HegState, HegTuple } from './@types';
 import { genHegData, sma, timeSma } from './heg-connection.util';
 

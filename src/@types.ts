@@ -23,13 +23,13 @@ export type HegState = {
     sessionData: HegData[];
     isReading: boolean;
     isConnected: boolean;
-    lastVal: HegData;
+    lastVal: HegData | null;
     sessionStart: number;
     showBtStats: boolean;
     SPS: number;
     ufSPS: number;
     spsErrors: number;
-    simMode: boolean
+    isSimMode: boolean
 }
 
 /** [red, ir, ratio] */

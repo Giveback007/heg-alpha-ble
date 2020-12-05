@@ -1,5 +1,9 @@
 {
   "debug.node.autoAttach": "on",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true,
+    "source.organizeImports": true
+  },
   "editor.detectIndentation": true,
   "editor.insertSpaces": true,
   "editor.tabSize": 4,
